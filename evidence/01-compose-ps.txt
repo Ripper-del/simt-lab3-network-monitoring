@@ -1,0 +1,8 @@
+$ docker compose ps --format 'table {{.Service}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}'
+SERVICE         IMAGE                                         STATUS                    PORTS
+grafana         grafana/grafana:11.6.0                        Up 6 minutes              0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+net-device      lab3-snmpd:1.0                                Up 11 minutes             161/udp
+zabbix-agent    zabbix/zabbix-agent2:alpine-7.0.10            Up 12 minutes             10050/tcp, 31999/tcp
+zabbix-db       postgres:16-alpine                            Up 13 minutes (healthy)   5432/tcp
+zabbix-server   zabbix/zabbix-server-pgsql:alpine-7.0.10      Up 13 minutes             10051/tcp
+zabbix-web      zabbix/zabbix-web-nginx-pgsql:alpine-7.0.10   Up 13 minutes (healthy)   0.0.0.0:8081->8080/tcp, [::]:8081->8080/tcp

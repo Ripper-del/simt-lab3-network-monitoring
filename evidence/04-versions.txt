@@ -1,0 +1,7 @@
+$ docker compose exec -T zabbix-server zabbix_server -V | head -1; docker compose exec -T zabbix-db postgres --version; curl -s http://localhost:3000/api/health | tr -d '\n '; echo; docker compose exec -T net-device snmpd -v | head -2; docker compose images --format 'table {{.Service}}\t{{.Repository}}\t{{.Tag}}'
+zabbix_server (Zabbix) 7.0.10
+postgres (PostgreSQL) 16.15
+{"database":"ok","version":"11.6.0","commit":"d2fdff9ee4d75c74bfd3a97c18a0b8e4d029f06e"}
+
+NET-SNMP version:  5.9.4
+format value "table {{.Service}}\\t{{.Repository}}\\t{{.Tag}}" could not be parsed: parsing failed

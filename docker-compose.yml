@@ -1,0 +1,99 @@
+name: lab3
+
+services:
+  zabbix-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: ${ZBX_DB_PASSWORD}
+      POSTGRES_DB: zabbix
+    volumes:
+      - zabbix-db-data:/var/lib/postgresql/data
+    networks: [monitoring]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U zabbix"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  zabbix-server:
+    image: zabbix/zabbix-server-pgsql:alpine-7.0.10
+    environment:
+      DB_SERVER_HOST: zabbix-db
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: ${ZBX_DB_PASSWORD}
+      POSTGRES_DB: zabbix
+    depends_on:
+      zabbix-db:
+        condition: service_healthy
+    # monitoring: власна мережа; lab1-frontend: щоб веб-сценарій бачив proxy з ЛР1
+    networks: [monitoring, lab1]
+
+  zabbix-web:
+    image: zabbix/zabbix-web-nginx-pgsql:alpine-7.0.10
+    environment:
+      ZBX_SERVER_HOST: zabbix-server
+      DB_SERVER_HOST: zabbix-db
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: ${ZBX_DB_PASSWORD}
+      POSTGRES_DB: zabbix
+      PHP_TZ: Europe/Kyiv
+    depends_on:
+      - zabbix-server
+    # єдиний порт веб-інтерфейсу Zabbix
+    ports:
+      - "8081:8080"
+    networks: [monitoring]
+
+  zabbix-agent:
+    image: zabbix/zabbix-agent2:alpine-7.0.10
+    # root потрібен для читання docker.sock
+    user: root
+    hostname: lab1-host
+    environment:
+      ZBX_HOSTNAME: lab1-host
+      ZBX_SERVER_HOST: zabbix-server
+    volumes:
+      # Docker Engine лише для читання
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks: [monitoring]
+
+  net-device:
+    build: ./snmpd
+    image: lab3-snmpd:1.0
+    hostname: net-device
+    networks: [monitoring]
+
+  grafana:
+    image: grafana/grafana:11.6.0
+    environment:
+      GF_INSTALL_PLUGINS: alexanderzobnin-zabbix-app 6.4.1
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: alexanderzobnin-zabbix-datasource
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
+      GRAFANA_ZBX_PASSWORD: ${GRAFANA_ZBX_PASSWORD}
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    networks: [monitoring]
+    depends_on:
+      - zabbix-web
+
+networks:
+  monitoring:
+    name: lab3-monitoring
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
+          gateway: 172.30.0.1
+  lab1:
+    # мережа проєкту ЛР1 (лише підключення, проєкт не змінюється)
+    name: lab1-frontend
+    external: true
+
+volumes:
+  zabbix-db-data:
+  grafana-data:

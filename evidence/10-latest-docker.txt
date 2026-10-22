@@ -1,0 +1,5 @@
+$ .venv/bin/python zbx_query.py latest 'lab1.db' 'docker.container_info[db' 'docker.container_info.state.status["/db"]'
+lab1-host  docker.container_info.state.status["/db"]               delay=0    last='running'  state=0
+lab1-host  docker.container_info[db,full]                          delay=10s  last='{"Id":"f1a5660c9a27b3614c4026a742c06f7e8'  state=0
+lab1-host  lab1.db.up                                              delay=0    last='1'  state=0
+lab1-host  lab1.db.state                                           delay=0    last='running'  state=0

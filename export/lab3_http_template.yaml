@@ -1,0 +1,38 @@
+zabbix_export:
+  version: '7.0'
+  template_groups:
+    - uuid: 7df96b18c230490a9a0a9e2307226338
+      name: Templates
+  templates:
+    - uuid: 915a2b9901e24fcc9689a291e146d40d
+      template: 'Lab3 HTTP template'
+      name: 'Lab3 HTTP template'
+      groups:
+        - name: Templates
+      items:
+        - uuid: a4508b56474f417db0e9f0ebebc53f43
+          name: 'Lab3: час відповіді HTTP проксі, мс'
+          type: CALCULATED
+          key: lab3.rt.ms
+          delay: 10s
+          history: 7d
+          value_type: FLOAT
+          units: ms
+          params: 'last(//net.tcp.service.perf[http,proxy,80])*1000'
+          triggers:
+            - uuid: 174c876459e4421d8533503d5cf77cd6
+              expression: 'avg(/Lab3 HTTP template/lab3.rt.ms,1m)>{$LAB3.RT.MAX.MS}'
+              name: 'Lab3: час відповіді проксі перевищує {$LAB3.RT.MAX.MS} мс'
+              priority: WARNING
+        - uuid: 5412349bfaa94c15a550b3f8b0e23a68
+          name: 'Lab3: час відповіді HTTP проксі, с'
+          type: SIMPLE
+          key: 'net.tcp.service.perf[http,proxy,80]'
+          delay: 10s
+          history: 7d
+          value_type: FLOAT
+          units: s
+      macros:
+        - macro: '{$LAB3.RT.MAX.MS}'
+          value: '500'
+          description: 'Поріг часу відповіді проксі, мс'

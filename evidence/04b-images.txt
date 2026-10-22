@@ -1,0 +1,8 @@
+$ docker compose images
+CONTAINER              REPOSITORY                      TAG                 PLATFORM            IMAGE ID            SIZE                CREATED
+lab3-grafana-1         grafana/grafana                 11.6.0              linux/arm64         62d2b9d20a19        167MB               18 minutes ago
+lab3-net-device-1      lab3-snmpd                      1.0                 linux/arm64         18a633a7b539        5.53MB              17 minutes ago
+lab3-zabbix-agent-1    zabbix/zabbix-agent2            alpine-7.0.10       linux/arm64         b6df70de8e07        27.3MB              18 minutes ago
+lab3-zabbix-db-1       postgres                        16-alpine           linux/arm64/v8      721873c34ceb        114MB               18 minutes ago
+lab3-zabbix-server-1   zabbix/zabbix-server-pgsql      alpine-7.0.10       linux/arm64         611552f0e7b2        25.8MB              18 minutes ago
+lab3-zabbix-web-1      zabbix/zabbix-web-nginx-pgsql   alpine-7.0.10       linux/arm64         21ec4e10c336        74.5MB              18 minutes ago

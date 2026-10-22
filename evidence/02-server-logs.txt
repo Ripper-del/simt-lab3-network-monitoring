@@ -1,0 +1,9 @@
+$ docker compose logs zabbix-server | tail -8
+zabbix-server-1  |    234:20261021:145201.980 item "lab1-host:docker.networks.tx_dropped["/db"]" became supported
+zabbix-server-1  |    234:20261021:145201.980 item "lab1-host:docker.networks.tx_bytes["/db"]" became supported
+zabbix-server-1  |    234:20261021:145201.980 item "lab1-host:docker.networks.rx_packets["/db"]" became supported
+zabbix-server-1  |    234:20261021:145201.980 item "lab1-host:docker.networks.rx_errors["/db"]" became supported
+zabbix-server-1  |    234:20261021:145201.980 item "lab1-host:docker.networks.rx_dropped["/db"]" became supported
+zabbix-server-1  |    234:20261021:145201.980 item "lab1-host:docker.networks.rx_bytes["/db"]" became supported
+zabbix-server-1  |    234:20261021:145201.980 item "lab1-host:docker.container_stats.cpu_usage.total.rate["/db"]" became supported
+zabbix-server-1  |    241:20261021:145645.375 cannot perform check now for itemid [49864]: item is not in cache

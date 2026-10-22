@@ -1,0 +1,5 @@
+$ .venv/bin/python zbx_query.py latest 'snmp.' | grep net-device
+net-device snmp.ifoper.eth0                                        delay=10s  last='1'  state=0
+net-device snmp.uptime                                             delay=10s  last='715.51' s state=0
+net-device snmp.ifout.eth0                                         delay=10s  last='144.67614087500706' bps state=0
+net-device snmp.ifin.eth0                                          delay=10s  last='132.68640544337666' bps state=0

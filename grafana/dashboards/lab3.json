@@ -1,0 +1,352 @@
+{
+  "uid": "lab3-monitoring",
+  "title": "ЛР3: Моніторинг інфраструктури",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "10s",
+  "time": {
+    "from": "2026-10-21T14:47:59.000Z",
+    "to": "2026-10-21T14:52:38.000Z"
+  },
+  "timezone": "browser",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Доступність застосунку (HTTP-код через проксі)",
+      "type": "state-timeline",
+      "datasource": {
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "zabbix"
+      },
+      "description": "Код відповіді веб-сценарію Zabbix; 200 - норма",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "zabbix"
+          },
+          "queryType": "0",
+          "group": {
+            "filter": "Lab3"
+          },
+          "host": {
+            "filter": "/lab1-host/"
+          },
+          "application": {
+            "filter": ""
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "item": {
+            "filter": "/Response code for step/"
+          },
+          "functions": [],
+          "options": {
+            "showDisableItems": false
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {},
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "200": {
+                  "text": "200 OK",
+                  "color": "green",
+                  "index": 0
+                },
+                "503": {
+                  "text": "503 збій",
+                  "color": "red",
+                  "index": 1
+                },
+                "0": {
+                  "text": "немає відповіді",
+                  "color": "red",
+                  "index": 2
+                }
+              }
+            }
+          ],
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 200
+              },
+              {
+                "color": "red",
+                "value": 300
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "showValue": "auto",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "title": "Час відповіді застосунку, с",
+      "type": "timeseries",
+      "datasource": {
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "zabbix"
+      },
+      "description": "",
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "zabbix"
+          },
+          "queryType": "0",
+          "group": {
+            "filter": "Lab3"
+          },
+          "host": {
+            "filter": "/lab1-host/"
+          },
+          "application": {
+            "filter": ""
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "item": {
+            "filter": "/Response time for step/"
+          },
+          "functions": [],
+          "options": {
+            "showDisableItems": false
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": {},
+          "mappings": [],
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "Стан контейнерів проєкту ЛР1",
+      "type": "state-timeline",
+      "datasource": {
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "zabbix"
+      },
+      "description": "1 - контейнер запущено, 0 - зупинено (плагін Docker, агент 2)",
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "zabbix"
+          },
+          "queryType": "0",
+          "group": {
+            "filter": "Lab3"
+          },
+          "host": {
+            "filter": "/lab1-host/"
+          },
+          "application": {
+            "filter": ""
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "item": {
+            "filter": "/LR1 .*контейнер запущено/"
+          },
+          "functions": [],
+          "options": {
+            "showDisableItems": false
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {},
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "1": {
+                  "text": "running",
+                  "color": "green",
+                  "index": 0
+                },
+                "0": {
+                  "text": "stopped",
+                  "color": "red",
+                  "index": 1
+                }
+              }
+            }
+          ],
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "showValue": "auto",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "title": "Трафік eth0 SNMP-пристрою, біт/с",
+      "type": "timeseries",
+      "datasource": {
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "zabbix"
+      },
+      "description": "",
+      "gridPos": {
+        "x": 12,
+        "y": 8,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "zabbix"
+          },
+          "queryType": "0",
+          "group": {
+            "filter": "Lab3"
+          },
+          "host": {
+            "filter": "/net-device/"
+          },
+          "application": {
+            "filter": ""
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "item": {
+            "filter": "/SNMP: (вхідний|вихідний) трафік/"
+          },
+          "functions": [],
+          "options": {
+            "showDisableItems": false
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps",
+          "custom": {},
+          "mappings": [],
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    }
+  ],
+  "tags": [
+    "lab3"
+  ]
+}

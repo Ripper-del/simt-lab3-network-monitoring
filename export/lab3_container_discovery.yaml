@@ -1,0 +1,50 @@
+zabbix_export:
+  version: '7.0'
+  template_groups:
+    - uuid: 7df96b18c230490a9a0a9e2307226338
+      name: Templates
+  templates:
+    - uuid: 2a1223dbd4c4498686be746a4debe57b
+      template: 'Lab3 container discovery'
+      name: 'Lab3 container discovery'
+      groups:
+        - name: Templates
+      discovery_rules:
+        - uuid: 71ccd592b1c2474c98e20c328e469c67
+          name: 'Виявлення контейнерів ЛР1'
+          key: 'docker.containers.discovery[true]'
+          delay: 30s
+          filter:
+            conditions:
+              - macro: '{#NAME}'
+                value: ^/(db|proxy|lab1-app-\d+)$
+                formulaid: A
+          lifetime: 1h
+          item_prototypes:
+            - uuid: e9ef5b34c5f64a8e98cc5671c182a807
+              name: 'Inspect {#NAME}'
+              key: 'docker.container_info[{#NAME},full]'
+              delay: 30s
+              history: 1d
+              value_type: TEXT
+              trends: '0'
+            - uuid: 1f20dd6d618e4d199637954f23e042cb
+              name: 'Контейнер {#NAME} запущено (1/0)'
+              type: DEPENDENT
+              key: 'lab3.container.up[{#NAME}]'
+              delay: '0'
+              history: 7d
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - $.State.Running
+                - type: BOOL_TO_DECIMAL
+                  parameters:
+                    - ''
+              master_item:
+                key: 'docker.container_info[{#NAME},full]'
+              trigger_prototypes:
+                - uuid: 73ec64332ce64738a18c10ef6e8a12f1
+                  expression: 'last(/Lab3 container discovery/lab3.container.up[{#NAME}])=0'
+                  name: 'Lab3: контейнер {#NAME} зупинено'
+                  priority: AVERAGE

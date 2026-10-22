@@ -1,0 +1,5 @@
+$ .venv/bin/python zbx_query.py triggers | grep -E 'LR1:|SNMP:' 
+net-device | SNMP: пристрій net-device недоступний | nodata(/net-device/snmp.uptime,60s)=1 | prio 3 | value 0 
+net-device | SNMP: вхідний трафік eth0 перевищує поріг | avg(/net-device/snmp.ifin.eth0,1m)>10000000 | prio 2 | value 0 
+lab1-host | LR1: застосунок недоступний через проксі (HTTP != 200) | last(/lab1-host/web.test.rspcode[lab1-app,proxy])<>200 or last(/lab1-host/web.test.fail[lab1-app])>0 | prio 4 | value 0 
+lab1-host | LR1: контейнер БД зупинено або відсутній | last(/lab1-host/lab1.db.up)=0 or nodata(/lab1-host/lab1.db.up,60s)=1 | prio 4 | value 0 

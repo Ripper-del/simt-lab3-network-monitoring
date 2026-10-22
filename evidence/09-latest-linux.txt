@@ -1,0 +1,13 @@
+$ .venv/bin/python zbx_query.py latest 'system.cpu.util' 'vm.memory.utilization' 'vfs.fs.dependent.size[/etc/hosts' 'net.if.in[' | grep -E 'system.cpu.util |vm.memory.utilization|pused|net.if.in' | head -12
+lab1-host  system.cpu.util                                         delay=0    last='3.841641999999993' % state=0
+lab1-host  vfs.fs.dependent.size[/etc/hosts,pused]                 delay=0    last='11.252145446476135' % state=0
+lab1-host  net.if.in["erspan0"]                                    delay=3m   last='0' bps state=0
+lab1-host  net.if.in["erspan0",dropped]                            delay=3m   last='0'  state=0
+lab1-host  net.if.in["erspan0",errors]                             delay=3m   last='0'  state=0
+net-device net.if.in[ifInOctets.11]                                delay=3m   last='176' bps state=0
+lab1-host  net.if.in["eth0"]                                       delay=3m   last='7096' bps state=0
+lab1-host  net.if.in["eth0",dropped]                               delay=3m   last='0'  state=0
+lab1-host  net.if.in["eth0",errors]                                delay=3m   last='0'  state=0
+lab1-host  net.if.in["gre0"]                                       delay=3m   last='0' bps state=0
+lab1-host  net.if.in["gre0",dropped]                               delay=3m   last='0'  state=0
+lab1-host  net.if.in["gre0",errors]                                delay=3m   last='0'  state=0

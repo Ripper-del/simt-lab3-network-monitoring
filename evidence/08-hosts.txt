@@ -1,0 +1,3 @@
+$ .venv/bin/python zbx_query.py hosts | grep -v 'Zabbix server'
+lab1-host [('1', 'zabbix-agent', '10050', '1')]
+net-device [('2', 'net-device', '161', '1')]

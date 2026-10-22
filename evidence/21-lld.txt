@@ -1,0 +1,20 @@
+$ ДО МАСШТАБУВАННЯ
+lab1-host  lab3.container.up[/db]                                  delay=0    last='1'  state=0
+lab1-host  lab3.container.up[/lab1-app-1]                          delay=0    last='1'  state=0
+lab1-host  lab3.container.up[/proxy]                               delay=0    last='1'  state=0
+
+$ docker compose -p lab1 up -d --scale app=2 --no-recreate
+ Container lab1-app-1  Waiting
+ Container lab1-app-2  Healthy
+ Container lab1-app-1  Healthy
+
+$ ПІСЛЯ МАСШТАБУВАННЯ (через 75 с, LLD кожні 30 с)
+lab1-host  lab3.container.up[/db]                                  delay=0    last='1'  state=0
+lab1-host  lab3.container.up[/lab1-app-1]                          delay=0    last='1'  state=0
+lab1-host  lab3.container.up[/lab1-app-2]                          delay=0    last='1'  state=0
+lab1-host  lab3.container.up[/proxy]                               delay=0    last='1'  state=0
+$ python zbx_query.py triggers | grep 'Lab3: контейнер'  (тригери, створені з прототипу)
+lab1-host | Lab3: контейнер /proxy зупинено | last(/lab1-host/lab3.container.up[/proxy])=0 | prio 3 | value 0 
+lab1-host | Lab3: контейнер /lab1-app-1 зупинено | last(/lab1-host/lab3.container.up[/lab1-app-1])=0 | prio 3 | value 0 
+lab1-host | Lab3: контейнер /db зупинено | last(/lab1-host/lab3.container.up[/db])=0 | prio 3 | value 0 
+lab1-host | Lab3: контейнер /lab1-app-2 зупинено | last(/lab1-host/lab3.container.up[/lab1-app-2])=0 | prio 3 | value 0 

@@ -1,0 +1,10 @@
+$ docker run --rm --network lab3-monitoring lab3-snmpd:1.0 snmpget -v2c -c wrongcomm -t1 -r1 net-device 1.3.6.1.2.1.1.5.0; echo 'rocommunity ... 172.30.0.0/24 -> лише мережа моніторингу'; grep -v '^#' snmpd/snmpd.conf
+Timeout: No Response from net-device.
+rocommunity ... 172.30.0.0/24 -> лише мережа моніторингу
+agentAddress udp:0.0.0.0:161
+rocommunity lab3comm 172.30.0.0/24
+rocommunity lab3comm 127.0.0.1
+sysName net-device-1
+sysLocation Lab3 stand
+sysContact student@example.com
+sysServices 72

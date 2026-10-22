@@ -1,0 +1,6 @@
+$ for k in agent.ping 'system.cpu.load[all,avg1]'; do echo "== $k"; docker compose exec -T zabbix-server zabbix_get -s zabbix-agent -k "$k"; done; docker compose exec -T zabbix-server zabbix_get -s zabbix-agent -k 'docker.containers.discovery[false]' | head -c 700; echo
+== agent.ping
+1
+== system.cpu.load[all,avg1]
+3.108398
+[{"{#ID}":"28d3e8e35da7b9c6797734f18dad3f15871b536160e0b9560473a11e4cbf2a0c","{#NAME}":"/lab3-net-device-1"},{"{#ID}":"2b937f6b6ac4a5a20224b3a9eeaf758871c562936385fdbb2ade5e7343fa7b54","{#NAME}":"/lab3-zabbix-agent-1"},{"{#ID}":"258e5d927c0f63a51f8440ae99c7089e85ef34ed2b08189acf3042386fdb5e38","{#NAME}":"/lab3-grafana-1"},{"{#ID}":"d86be96a31f4ba85721d1f7bdf6b2b68de52aa29e22d7fb8e135d7579a087d56","{#NAME}":"/lab3-zabbix-web-1"},{"{#ID}":"e8a839501410183440357c1036b374837a746fd5a3a6fd1f67ceca793c0381aa","{#NAME}":"/lab3-zabbix-server-1"},{"{#ID}":"a00b871e0b12c00579eef52c5380789984c06eb640472ee440d39633439a81fb","{#NAME}":"/lab3-zabbix-db-1"},{"{#ID}":"f4bfe0fdc314e159bfd76ff41c8013214ab8c759

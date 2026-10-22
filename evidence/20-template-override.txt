@@ -1,0 +1,14 @@
+$ ТРИГЕР ШАБЛОНУ ДО ПЕРЕВИЗНАЧЕННЯ МАКРОСУ ({$LAB3.RT.MAX.MS}=500 з шаблону)
+lab1-host | Lab3: час відповіді проксі перевищує {$LAB3.RT.MAX.MS} мс | avg(/lab1-host/lab3.rt.ms,1m)>500 | prio 2 | value 0 
+
+$ python configure_template.py macro 1   # перевизначення на вузлі lab1-host
+Макрос на рівні вузла перевизначено: 1
+$ ПІСЛЯ ПЕРЕВИЗНАЧЕННЯ (через ~100 с)
+lab1-host | Lab3: час відповіді проксі перевищує {$LAB3.RT.MAX.MS} мс | avg(/lab1-host/lab3.rt.ms,1m)>1 | prio 2 | value 1 
+17:58:33 Lab3: час відповіді проксі перевищує 1 мс severity 2 ACTIVE
+
+$ python configure_template.py macro reset
+Макрос на рівні вузла видалено (діє значення шаблону 500)
+$ ПІСЛЯ ПОВЕРНЕННЯ МАКРОСУ
+lab1-host | Lab3: час відповіді проксі перевищує {$LAB3.RT.MAX.MS} мс | avg(/lab1-host/lab3.rt.ms,1m)>500 | prio 2 | value 0 
+17:58:33 Lab3: час відповіді проксі перевищує 1 мс severity 2 resolved

@@ -1,0 +1,7 @@
+$ .venv/bin/python zbx_query.py latest 'web.test'
+lab1-host  web.test.in[lab1-app,,bps]                              delay=10s  last='5201' Bps state=0
+lab1-host  web.test.in[lab1-app,proxy,bps]                         delay=10s  last='5201' Bps state=0
+lab1-host  web.test.fail[lab1-app]                                 delay=10s  last='0'  state=0
+lab1-host  web.test.error[lab1-app]                                delay=10s  last='response code "503" did not match any of'  state=0
+lab1-host  web.test.rspcode[lab1-app,proxy]                        delay=10s  last='200'  state=0
+lab1-host  web.test.time[lab1-app,proxy,resp]                      delay=10s  last='0.007306' s state=0
